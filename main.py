@@ -11,11 +11,12 @@ import os
 
 # Loading .env
 from dotenv import load_dotenv
-
 load_dotenv()
 
 # Train test Split
 dataset = ImagePairDataset(os.getenv("BASE_PATH"))
+print(os.getenv("BASE_PATH"))
+print(len(dataset))
 train_size = int(0.8 * len(dataset))
 test_size = len(dataset) - train_size
 train_dataset, test_dataset = torch.utils.data.random_split(

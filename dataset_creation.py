@@ -43,8 +43,12 @@ def rename_file(file_path, new_name):
     return
 
 
+# Loading .env
+from dotenv import load_dotenv
+load_dotenv()
+
 BASE_PATH = os.getenv("BASE_PATH", ".")
-folder_path = f"{BASE_PATH}/Images/*"
+folder_path = f"{BASE_PATH}/*"
 op_path_similar = f"{BASE_PATH}/similar_all_images"
 op_path_dissimilar = f"{BASE_PATH}/dissimilar_all_images"
 tmp = f"{BASE_PATH}/tmp"
@@ -74,7 +78,12 @@ for i in glob.glob(folder_path):
     ]:
         continue
 
-    file_name = i.split("\\")[-1].split("-")[1]
+    try:
+        file_name = i.split("\\")[-1].split("-")[1]
+    except Exception as e:
+        print(e)
+        pass
+
     picked_files = random.sample(get_file_names(i), 6)
 
     copy_files(i, picked_files, tmp)
@@ -93,6 +102,8 @@ for i in glob.glob(folder_path):
         range(len(folders_list))
     )
 
+    print(folders_list[choice_one])
+    print(folders_list[choice_two])
     picked_dissimilar_one = random.sample(get_file_names(folders_list[choice_one]), 3)
     picked_dissimilar_two = random.sample(get_file_names(folders_list[choice_two]), 3)
 
